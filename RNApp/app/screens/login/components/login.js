@@ -14,7 +14,7 @@ class Login extends Component {
     }
   }
 
-  onChangedEmailValue(text) {
+  onChangeEmailValue(text) {
 
     this.setState({
       emailInputValue: text,
@@ -70,7 +70,7 @@ class Login extends Component {
         />
 
         <TouchableOpacity style={{
-          backgroundColor: 'blue',
+          backgroundColor: 'gray',
           width: wp('90%'),
           height: hp('5%'),
           alignItems: 'center',
