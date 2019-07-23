@@ -2,45 +2,14 @@ import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { createStackNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation';
 
-class HomeScreen extends React.Component {
-    render() {
-      return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>Home Screen</Text>
-          <Button
-            title="Go to Details"
-            onPress={() => this.props.navigation.navigate('Details')}
-          />
-        </View>
-      );
-    }
-}
-
-  class DetailsScreen extends React.Component {
-    render() {
-      return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>Details Screen</Text>
-          <Button
-            title="Go to Details... again"
-            onPress={() => this.props.navigation.push('Details')}
-          />
-          <Button
-            title="Go to Home"
-            onPress={() => this.props.navigation.navigate('Home')}
-          />
-          <Button
-            title="Go back"
-            onPress={() => this.props.navigation.goBack()}
-          />
-        </View>
-      );
-    }
-  }
+import { Home } from './screens/home';
+import { Profile } from './screens/profile';
+import { Settings } from './screens/settings';
 
   const TabNavigator = createBottomTabNavigator({
-    Home: HomeScreen,
-    Settings: DetailsScreen,
+    Home: Home,
+    Settings: Settings,
+    Profile: Profile
   }); 
   
   export default createAppContainer(TabNavigator);
