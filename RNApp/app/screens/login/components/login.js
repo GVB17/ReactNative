@@ -66,7 +66,6 @@ class Login extends Component {
             borderColor: 'gray',
             borderRadius: 4
           }}
-          keyboardType='email-address'
           onChangeText={(text) => this.onChangePwdValue(text)}
         />
 
