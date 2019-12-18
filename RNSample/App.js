@@ -32,12 +32,12 @@ import TextInputComponent from './app/screens/004_TextInput';
 const App: () => React$Node = () => {
   return (
     <View style={styles.screen}>
-      <HeaderCustom title= "Home"/>
+      {/* <HeaderCustom title= "Home"/> */}
 
-      {/* <Screen1 /> */}
+      <Screen1 />
       {/* <ScreenCardView />  */}
       {/* <UseCardViewComponent /> */}
-      <TextInputComponent />
+      {/* <TextInputComponent /> */}
 
     </View>
   );
@@ -93,7 +93,10 @@ const App: () => React$Node = () => {
 
 const styles = StyleSheet.create({
   screen: {
-    flex: 1
+    flex: 1,
+    backgroundColor: 'red',
+    width: 100,
+    height: 100
   },
   scrollView: {
     backgroundColor: Colors.lighter,

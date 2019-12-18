@@ -8,7 +8,8 @@ export default class CustomLogoView extends Component {
             <View style={styles.container}>
                 <View style={styles.logoView}>
                     <Image resizeMode="contain" style={styles.logo}
-                        source={imagePath.dtaLogoDark}>
+                        //source={imagePath.LogoDark}
+                        >
                     </Image>
                 </View>
             </View>
