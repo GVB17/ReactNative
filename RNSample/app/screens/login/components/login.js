@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, NetInfo, Text } from 'react-native';
+import { StyleSheet, View, NetInfo, Text, Picker, Alert, Button } from 'react-native';
 import CustomHeader from '../../../common/Header';
 import imagePath from '../../../common/imagePath';
 
@@ -10,6 +10,11 @@ import { checkConnection } from "../../../common/utils";
 import { userLogin, clearData } from "../actions";
 import { LocaleConfig } from 'react-native-calendars';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import Dialog, { SlideAnimation, DialogContent, DialogTitle, DialogFooter, DialogButton } from 'react-native-popup-dialog';
+// import Modal, { SlideAnimation, ModalContent } from 'react-native-modals';
+
+import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
+
 
 let isChecked = false;
 
@@ -25,6 +30,22 @@ LocaleConfig.defaultLocale = 'fr';
 const vacation = { key: 'vacation', color: 'red', selectedDotColor: 'blue' };
 const massage = { key: 'massage', color: 'blue', selectedDotColor: 'blue' };
 const workout = { key: 'workout', color: 'green' };
+
+const sports = [
+    {
+        label: 'Football',
+        value: 'football',
+    },
+    {
+        label: 'Baseball',
+        value: 'baseball',
+    },
+    {
+        label: 'Hockey',
+        value: 'hockey',
+    },
+];
+
 
 class Login extends Component {
 
@@ -42,7 +63,12 @@ class Login extends Component {
             },
             checked: true,
             userLoginData: null,
+            user: '',
         }
+    }
+
+    updateUser = (user) => {
+        this.setState({ user: user })
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -80,15 +106,77 @@ class Login extends Component {
     }
 
 
+    InputAccessoryView() {
+        return (
+            <View style={defaultStyles.modalViewMiddle}>
+                <TouchableWithoutFeedback
+                    onPress={() => {
+                        this.setState(
+                            {
+                                favSport5: this.state.previousFavSport5,
+                            },
+                            () => {
+                                this.inputRefs.favSport5.togglePicker(true);
+                            }
+                        );
+                    }}
+                    hitSlop={{ top: 4, right: 4, bottom: 4, left: 4 }}>
+                    <View testID="needed_for_touchable">
+                        <Text
+                            style={[
+                                defaultStyles.done,
+                                { fontWeight: 'normal', color: 'red' },
+                            ]}>
+                            Cancel
+                </Text>
+                    </View>
+                </TouchableWithoutFeedback>
+                <Text>Name | Prefer</Text>
+                <TouchableWithoutFeedback
+                    onPress={() => {
+                        this.inputRefs.favSport5.togglePicker(true);
+                    }}
+                    hitSlop={{ top: 4, right: 4, bottom: 4, left: 4 }}>
+                    <View testID="needed_for_touchable">
+                        <Text style={defaultStyles.done}>Done</Text>
+                    </View>
+                </TouchableWithoutFeedback>
+            </View>
+        );
+    }
+
     onSubmitButtonPress = () => {
 
-        let input = {
+        this.setState({ visible: true });
 
-            email: 'test@gmail.com',
-            password: '123456',
-        };
+        // Alert.alert(
+        //     'Alert Title',
+        //     'My Alert Msg',
+        //     [
+        //       {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+        //       {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+        //       {
+        //         text: 'Cancel',
+        //         onPress: () => console.log('Cancel Pressed'),
+        //         style: 'cancel',
+        //       },
+        //       {text: 'OK', onPress: () => console.log('OK Pressed')},
+        //     ],
+        //     {cancelable: false},
+        //   );
 
-        this.props.userLogin(input);
+        // Alert.alert(
+        //     <View style={{backgroundColor:'red', width:100, height: 100}}></View>
+        // );
+
+
+        // let input = {
+
+        //     email: 'test@gmail.com',
+        //     password: '123456',
+        // };
+
+        // this.props.userLogin(input);
 
         // checkConnection().then((connected) => {
         //     if (connected) {
@@ -133,19 +221,150 @@ class Login extends Component {
     }
 
     render() {
+
+        const placeholder = {
+            label: 'Select a sport...',
+            value: null,
+            color: '#9EA0A4',
+        };
+
         return (
 
             <View style={styles.screen}>
                 <CustomHeader
                     headerTitle={'Login'}
-                    leftText={'Back'}
-                    leftImage={imagePath.backArrow}
-                    rightText={'Next'}
+                    // leftText={'Back'}
+                    // leftImage={imagePath.backArrow}
+                    // rightText={'Next'}
                     rightImage={imagePath.backArrow}
                     //onLeftButtonPress={this.onBackButtonPress.bind(this)}
                     onRightButtonPress={this.onSubmitButtonPress.bind(this)}
                 />
 
+{/* <View style={styles.container}>
+  <Dialog
+    visible={this.state.visible}
+    footer={
+      <DialogFooter>
+        <DialogButton
+          text="CANCEL"
+          onPress={() => {}}
+        />
+        <DialogButton
+          text="OK"
+          onPress={() => {}}
+        />
+      </DialogFooter>
+    }
+  >
+    <DialogContent>
+      
+    </DialogContent>
+  </Dialog>
+</View> */}
+
+                {/* <View style={styles.container}> */}
+                    {/* <Button
+                        title="Show Dialog"
+                        onPress={() => {
+                            this.setState({ visible: true });
+                        }}
+                    /> */}
+                    <Dialog
+                        visible={this.state.visible}
+                        onTouchOutside={() => {
+                            this.setState({ visible: false });
+                        }}
+                    >
+                        <DialogContent>
+                            <View style={{ backgroundColor: 'red', width: 300, height: 30, marginTop: 10 }}></View>
+
+                            <View style={{ backgroundColor: 'green', width: 300, height: 30 }}></View>
+                        </DialogContent>
+                    </Dialog>
+                {/* </View> */}
+
+                {/* <View style={styles.container}>
+                    <Modal
+                        visible={this.state.visible}
+                        modalAnimation={new SlideAnimation({
+                            slideFrom: 'bottom',
+                        })}
+                    >
+                        <ModalContent>
+
+                        </ModalContent>
+                    </Modal>
+                </View> */}
+
+
+
+                {/* <View>
+                    <Picker selectedValue={this.state.user} onValueChange={this.updateUser}>
+                        <Picker.Item label="Steve" value="steve" />
+                        <Picker.Item label="Ellen" value="ellen" />
+                        <Picker.Item label="Maria" value="maria" />
+                    </Picker>
+                    <Text style={styles.text}>{this.state.user}</Text>
+                </View> */}
+
+
+                {/* <RNPickerSelect
+                    placeholder={{}}
+                    items={sports}
+                    onValueChange={value => {
+                        this.setState({
+                            favSport2: value,
+                        });
+                    }}
+                    InputAccessoryView={() => null}
+                    style={pickerSelectStyles}
+                    value={this.state.favSport2}
+                /> */}
+
+
+                {/* <RNPickerSelect
+                    // placeholder={placeholder}
+                    items={sports}
+                    onValueChange={value => {
+                        this.setState({
+                            favSport4: value,
+                        });
+                    }}
+                    // style={{
+                    //     ...pickerSelectStyles,
+                    //     iconContainer: {
+                    //         top: 10,
+                    //         right: 12,
+                    //     },
+                    // }}
+                    value={this.state.favSport4}
+                    useNativeAndroidPickerStyle={false}
+                    textInputProps={{ underlineColor: 'yellow' }}
+                // Icon={() => {
+                //   return <Ionicons name="md-arrow-down" size={24} color="gray" />;
+                // }}
+                /> */}
+
+
+                {/* <RNPickerSelect
+                    items={sports}
+                    value={this.state.favSport5}
+                    onValueChange={value => {
+                        this.setState({
+                            favSport5: value,
+                        });
+                    }}
+                    onOpen={() => {
+                        this.setState({
+                            previousFavSport5: this.state.favSport5,
+                        });
+                    }}
+                    InputAccessoryView={this.InputAccessoryView}
+                // ref={ref => {
+                //   this.inputRefs.favSport5 = ref;
+                // }}
+                /> */}
                 {/* <Loader loading={this.props.isLoading} /> */}
 
                 {/* <Calendar
@@ -330,7 +549,7 @@ class Login extends Component {
                 //...calendarParams
                 /> */}
 
-                <Agenda
+                {/* <Agenda
                     // the list of items that have to be displayed in agenda. If you want to render item as empty date
                     // the value of date key kas to be an empty array []. If there exists no value for date key it is
                     // considered that the date in question is not yet loaded
@@ -394,7 +613,7 @@ class Login extends Component {
                     }}
                     // agenda container style
                     style={{}}
-                />
+                /> */}
 
             </View>
         );
@@ -424,5 +643,28 @@ export default connect(
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
+    },
+});
+
+const pickerSelectStyles = StyleSheet.create({
+    inputIOS: {
+        fontSize: 16,
+        paddingVertical: 12,
+        paddingHorizontal: 10,
+        borderWidth: 1,
+        borderColor: 'gray',
+        borderRadius: 4,
+        color: 'black',
+        paddingRight: 30, // to ensure the text is never behind the icon
+    },
+    inputAndroid: {
+        fontSize: 16,
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        borderWidth: 0.5,
+        borderColor: 'purple',
+        borderRadius: 8,
+        color: 'black',
+        paddingRight: 30, // to ensure the text is never behind the icon
     },
 });
