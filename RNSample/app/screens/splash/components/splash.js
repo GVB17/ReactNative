@@ -26,7 +26,7 @@ class Splash extends Component {
         const resetAction = StackActions.reset({
             key: null,
             index: 0,
-            actions: [NavigationActions.navigate({routeName: 'Login'})],
+            actions: [NavigationActions.navigate({routeName: 'Sample2'})],
         });
         this.props.navigation.dispatch(resetAction);
     }

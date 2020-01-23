@@ -7,7 +7,7 @@ export const userLogin$$ = async (payload) => {
     console.log('API')
 
     let audit= {
-        source: 'connect-mobile',
+        source: '',
         ipAddress: "",
         deviceID: "",
         phoneNumber: "",

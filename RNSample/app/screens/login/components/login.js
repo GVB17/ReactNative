@@ -271,13 +271,15 @@ class Login extends Component {
                         }}
                     /> */}
                     <Dialog
-                        visible={this.state.visible}
+                        visible={this.state.visible}    
                         onTouchOutside={() => {
                             this.setState({ visible: false });
                         }}
                     >
                         <DialogContent>
-                            <View style={{ backgroundColor: 'red', width: 300, height: 30, marginTop: 10 }}></View>
+                            <View style={{ backgroundColor: 'red', width: 300, height: 30, marginTop: 10 }}>
+                                
+                            </View>
 
                             <View style={{ backgroundColor: 'green', width: 300, height: 30 }}></View>
                         </DialogContent>
